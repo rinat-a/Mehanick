@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScr : MonoBehaviour
 {
@@ -11,13 +12,19 @@ public class PlayerScr : MonoBehaviour
 
     [SerializeField] float startTimeBtwShoot;
     [SerializeField] float offset;
+    [SerializeField] int bulletCount = 10;
+    [SerializeField] Slider slider;
+    [SerializeField] float reloadTime = 1;
+
+    int bulets;
+    bool isReload = false;
 
     public float timeBtwShots = 5f;
     private float rotZ;
     //private PlayerScr player;
     public static PlayerScr P;
 
-    bool isShoot = false;
+    public bool isShoot = false;
 
     private void Awake()
     {
@@ -28,6 +35,10 @@ public class PlayerScr : MonoBehaviour
     void Start()
     {
         timeBtwShots = startTimeBtwShoot;
+        bulets = bulletCount;
+        slider.maxValue = bulletCount;
+        slider.value = bulets;
+        StartCoroutine(Shoot());
     }
 
   
@@ -37,19 +48,12 @@ public class PlayerScr : MonoBehaviour
             rotZ = Mathf.Atan2(joystick.Vertical, joystick.Horizontal) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
 
-        if ((joystick.Horizontal != 0 || joystick.Vertical != 0))
-        {
+        if (joystick.Direction != Vector2.zero)
             if (!isShoot)
-            {
-                StartCoroutine(Shoot());
                 isShoot = true;
-            }
-        }
-        else
-        {
-                        StopAllCoroutines(); 
-        isShoot = false;
-        }
+        if(joystick.Direction == Vector2.zero)
+            isShoot = false;
+        Debug.Log(joystick.Direction);
     }
     public void DeltaWhat(string name, float value)
     {
@@ -64,9 +68,35 @@ public class PlayerScr : MonoBehaviour
     {
         while (true)
         {
+            if (isShoot)
+            {
+            if (bulets > 0 && !isReload) 
+            {
+                Instantiate(bullet, ShotPoint.position, transform.rotation);
+                bulets--;
+                slider.value = bulets;
+            }
+            else if (!isReload)
+            {
+                isReload = true;
+                StartCoroutine(Reload());
+            }
             yield return new WaitForSeconds(timeBtwShots);
-            Instantiate(bullet, ShotPoint.position, transform.rotation);
+            }
+            yield return new WaitForEndOfFrame();
         }
+    }
+    IEnumerator Reload()
+    {
+        slider.fillRect.GetComponent<Image>().color = Color.red;
+        while(bulets < bulletCount)
+        {
+            bulets++;
+            slider.value = bulets;
+            yield return new WaitForSeconds(reloadTime/bulletCount);
+        }
+        slider.fillRect.GetComponent<Image>().color = Color.white;
+        isReload = false;
     }
     #region Bufs
     public void upSpeedBuff()

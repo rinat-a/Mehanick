@@ -13,14 +13,13 @@ public class Shoop : MonoBehaviour
     [SerializeField] int barickadCoast = 5;
     [SerializeField] int healthCoast = 5;
 
-    //[SerializeField] GameObject shoopCreen;
-    //[SerializeField] Transform canvas;
-    //bool isShopCreen = false;
 
     [SerializeField] Transform PointBarickadprefLeft;  [SerializeField] GameObject PrefBarickadprefRightLeft;
     [SerializeField] Transform PointBarickadprefRight;  [SerializeField] GameObject PrefBarickUpDown;
     [SerializeField] Transform PointBarickadprefDown;  
-    [SerializeField] Transform PointBarickadprefUp;  
+    [SerializeField] Transform PointBarickadprefUp;
+
+    [SerializeField] GameObject shopPanel;
 
 
     private void Awake()
@@ -65,19 +64,12 @@ public class Shoop : MonoBehaviour
         money++;
         moneyText.text = "Money: " + money;
     }
-    /*
-    public void shopping()
+    public void OpenShop()
     {
-        if (isShopCreen)
-        {
-            Instantiate(shoopCreen, canvas);
-            isShopCreen = true;
-        }
-        else
-        {
-            Destroy(shoopCreen);
-            isShopCreen = false;
-        }
+        shopPanel.SetActive(true);
     }
-    */
+    public void CloseShop()
+    {
+        shopPanel.SetActive(false);
+    }
 }
