@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
-  maxHealth: 400
+  maxHealth: 200
   slider: {fileID: 7647594074737386297}
   bonusProcent: 5
   missProcent: 10

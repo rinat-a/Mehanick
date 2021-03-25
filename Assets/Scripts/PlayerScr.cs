@@ -8,13 +8,17 @@ public class PlayerScr : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] Joystick joystick;
     [SerializeField] Transform ShotPoint;
+
+    #region BufsPeremen
     [SerializeField] float SpeedBuff = 1;
+    [SerializeField] float upReloadTime = 1.0f;
+    #endregion
 
     [SerializeField] float startTimeBtwShoot;
     [SerializeField] float offset;
     [SerializeField] int bulletCount = 10;
     [SerializeField] Slider slider;
-    [SerializeField] float reloadTime = 1;
+    [SerializeField] float reloadTime = 2;
 
     int bulets;
     bool isReload = false;
@@ -48,12 +52,11 @@ public class PlayerScr : MonoBehaviour
             rotZ = Mathf.Atan2(joystick.Vertical, joystick.Horizontal) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
 
-        if (joystick.Direction != Vector2.zero)
+        if (joystick.Direction != Vector2.zero && Time.timeScale != 0)
             if (!isShoot)
                 isShoot = true;
         if(joystick.Direction == Vector2.zero)
             isShoot = false;
-        Debug.Log(joystick.Direction);
     }
     public void DeltaWhat(string name, float value)
     {
@@ -70,18 +73,18 @@ public class PlayerScr : MonoBehaviour
         {
             if (isShoot)
             {
-            if (bulets > 0 && !isReload) 
-            {
-                Instantiate(bullet, ShotPoint.position, transform.rotation);
-                bulets--;
-                slider.value = bulets;
-            }
-            else if (!isReload)
-            {
-                isReload = true;
-                StartCoroutine(Reload());
-            }
-            yield return new WaitForSeconds(timeBtwShots);
+                if (bulets > 0 && !isReload) 
+                {
+                    Instantiate(bullet, ShotPoint.position, transform.rotation);
+                    bulets--;
+                    slider.value = bulets;
+                }
+                    else if (!isReload)
+                    {
+                        isReload = true;
+                        StartCoroutine(Reload());
+                    }
+                yield return new WaitForSeconds(timeBtwShots);
             }
             yield return new WaitForEndOfFrame();
         }
@@ -102,6 +105,10 @@ public class PlayerScr : MonoBehaviour
     public void upSpeedBuff()
     {
         timeBtwShots -= SpeedBuff;
+    }
+    public void upReload()
+    {
+        reloadTime -= upReloadTime;
     }
     #endregion
 }

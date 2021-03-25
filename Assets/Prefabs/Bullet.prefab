@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4905843413878410005}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.1365, y: 0.8546, z: 0}
-  m_LocalScale: {x: 0.062524244, y: 0.062524244, z: 0.062524244}
+  m_LocalPosition: {x: -5.4087, y: 1.131, z: 0}
+  m_LocalScale: {x: 0.25768805, y: 0.38031304, z: 0.037839673}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cdf98412d79f2694a9d4f59dcfc627e5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1a9739c13ab58e342b5fa567f7a584a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,9 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  deltaDamage: 10
-  damage: 35
+  deltaDamage: 20
+  damage: 50
   textPref: {fileID: 4764985846323346930, guid: 659ba2a35ab4e2e4ab7179856b9cdf3a, type: 3}
+  canvosRoot: {fileID: 0}
 --- !u!50 &4905843413878410001
 Rigidbody2D:
   serializedVersion: 4
@@ -139,12 +140,12 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.1, y: 10.8}
+    oldSize: {x: 0.38, y: 1.74}
     newSize: {x: 8.1, y: 10.8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.1, y: 10.8}
+  m_Size: {x: 0.38, y: 1.74}
   m_EdgeRadius: 0

@@ -6,21 +6,27 @@ using UnityEngine;
 public class Shoop : MonoBehaviour
 {
     [SerializeField] GameObject healthTowerScr;
+    [SerializeField] GameObject playerScr;
     public static Shoop S;
     [SerializeField] Text moneyText;
-    public int money = 0;
+    public int money = 10;
+
+    [SerializeField] GameObject shopPanel;
+    [SerializeField] GameObject MenuPanel;
+    #region upCoast
     [SerializeField] int speedCoast = 5;
     [SerializeField] int barickadCoast = 5;
     [SerializeField] int healthCoast = 5;
+    [SerializeField] int upReloadCoast = 5;
+    [SerializeField] int upbulletCountCoast = 5;
+    #endregion
 
-
+    #region Barickad
     [SerializeField] Transform PointBarickadprefLeft;  [SerializeField] GameObject PrefBarickadprefRightLeft;
     [SerializeField] Transform PointBarickadprefRight;  [SerializeField] GameObject PrefBarickUpDown;
     [SerializeField] Transform PointBarickadprefDown;  
     [SerializeField] Transform PointBarickadprefUp;
-
-    [SerializeField] GameObject shopPanel;
-
+    #endregion
 
     private void Awake()
     {
@@ -29,6 +35,8 @@ public class Shoop : MonoBehaviour
     }
     private void Start()
     {
+        money += barickadCoast;
+        Barickad();
         moneyText.text = "Money: " + money;
     }
 
@@ -55,9 +63,12 @@ public class Shoop : MonoBehaviour
     }
     public void HealthUp()
     {
-        money -= barickadCoast;
-        moneyText.text = "Money: " + money;
-        healthTowerScr.GetComponent<HealthTowerScr>().Uphealth();
+        if (money >= healthCoast)
+        {
+            money -= healthCoast;
+            moneyText.text = "Money: " + money;
+            healthTowerScr.GetComponent<HealthTowerScr>().Uphealth();
+        }
     }
     public void moneyUp()
     {
@@ -71,5 +82,14 @@ public class Shoop : MonoBehaviour
     public void CloseShop()
     {
         shopPanel.SetActive(false);
+    }
+    public void upReload()
+    {
+        if (money >= upReloadCoast)
+        {
+            money -= upReloadCoast;
+            moneyText.text = "Money: " + money;
+            playerScr.GetComponent<PlayerScr>().upReload();
+        }
     }
 }
