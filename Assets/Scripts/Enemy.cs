@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float speed;
     private PlayerScr Player;
+    [SerializeField] Transform player;
     int enemyHealth = 100;
     [SerializeField] int maxHealth = 100;
     [SerializeField] Slider slider;
@@ -17,34 +18,41 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] Bonus[] bonuses;
     [SerializeField] GameObject bonusPref;
-
+    [SerializeField] GameObject particles;
+    Vector3 moveDirection;
     void Start()
     {
         Player = FindObjectOfType<PlayerScr>();
         enemyHealth = maxHealth;
         slider.value = slider.maxValue= maxHealth;
+        moveDirection = player.position - transform.position;
+        if (moveDirection != Vector3.zero)
+        {
+            float angle = Mathf.Atan2(-moveDirection.x, moveDirection.y) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
     }
 
 
     void Update()
     {
         transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
-        if(enemyHealth < 0)
-        {
-            Destroy(gameObject);
-            BonusDrop();
-        }
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<HealthTowerScr>() != null)
         {
             collision.gameObject.GetComponent<HealthTowerScr>().IsDamage();
+            var part = Instantiate(particles, transform.position, Quaternion.identity);
+            Destroy(part, 0.4f);
             Destroy(gameObject);
         }
         if (collision.gameObject.GetComponent<Baricad>() != null)
         {
             collision.gameObject.GetComponent<Baricad>().IsDamage();
+            var part = Instantiate(particles, transform.position, Quaternion.identity);
+            Destroy(part, 0.4f);
             Destroy(gameObject);
         }
     }
@@ -59,6 +67,11 @@ public class Enemy : MonoBehaviour
         {
             enemyHealth -= damage; 
             slider.value = enemyHealth;
+            if (enemyHealth < 0)
+            {
+                Destroy(gameObject);
+                BonusDrop();
+            }
         }
     }
     public void BonusDrop()

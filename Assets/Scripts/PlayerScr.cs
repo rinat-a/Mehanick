@@ -20,6 +20,8 @@ public class PlayerScr : MonoBehaviour
     [SerializeField] Slider slider;
     [SerializeField] float reloadTime = 2;
 
+    [SerializeField] GameObject particle;
+
     int bulets;
     bool isReload = false;
 
@@ -76,7 +78,8 @@ public class PlayerScr : MonoBehaviour
                 if (bulets > 0 && !isReload) 
                 {
                     Instantiate(bullet, ShotPoint.position, transform.rotation);
-                    bulets--;
+                    var part = Instantiate(particle, ShotPoint.position, transform.rotation);
+                    Destroy(part, 0.2f);
                     slider.value = bulets;
                 }
                     else if (!isReload)

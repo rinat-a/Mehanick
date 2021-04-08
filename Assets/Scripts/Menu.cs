@@ -6,6 +6,10 @@ public class Menu : MonoBehaviour
 {
     [SerializeField] GameObject MenuPanel;
     bool isTimeScale = false;
+    private void Start()
+    {
+        CloseMenu();
+    }
     public void OpenMenu()
     {
         MenuPanel.SetActive(true);

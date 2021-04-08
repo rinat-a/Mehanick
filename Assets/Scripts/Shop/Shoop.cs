@@ -75,14 +75,8 @@ public class Shoop : MonoBehaviour
         money++;
         moneyText.text = "Money: " + money;
     }
-    public void OpenShop()
-    {
-        shopPanel.SetActive(true);
-    }
-    public void CloseShop()
-    {
-        shopPanel.SetActive(false);
-    }
+    public void OpenShop() => shopPanel.SetActive(true);
+    public void CloseShop() => shopPanel.SetActive(false);
     public void upReload()
     {
         if (money >= upReloadCoast)

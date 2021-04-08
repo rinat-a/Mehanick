@@ -223,7 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97b1d4a904bb024ca75895490860b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
+  speed: 1.2
+  player: {fileID: 0}
   maxHealth: 100
   slider: {fileID: 6885669058385853692}
   bonusProcent: 0
@@ -232,6 +233,7 @@ MonoBehaviour:
   bonuses:
   - {fileID: 6970069792749610555, guid: 02051ca17b3bce3429d87cd3476c3ea9, type: 3}
   bonusPref: {fileID: 3858852855149116545, guid: 02051ca17b3bce3429d87cd3476c3ea9, type: 3}
+  particles: {fileID: 6106111157576372498, guid: aa1c5e7a718a4874ea831c447d6a301a, type: 3}
 --- !u!50 &7673522801494776516
 Rigidbody2D:
   serializedVersion: 4
