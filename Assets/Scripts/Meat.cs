@@ -16,7 +16,8 @@ public class Meat : MonoBehaviour
     {
         Health--;
         if (Health <= 0)
-            transform.position = new Vector2(1000, 1000);
+            //transform.position = new Vector2(1000, 1000);
+            Destroy(gameObject);
 
     }
     private void OnTriggerEnter2D(Collider2D collision)

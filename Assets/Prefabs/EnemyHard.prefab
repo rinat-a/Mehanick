@@ -319,6 +319,14 @@ MonoBehaviour:
   bonuses:
   - {fileID: 6970069792749610555, guid: 02051ca17b3bce3429d87cd3476c3ea9, type: 3}
   bonusPref: {fileID: 3858852855149116545, guid: 02051ca17b3bce3429d87cd3476c3ea9, type: 3}
+  particles: {fileID: 0}
+  distanceToMeat: 5
+  stars: []
+  twoStar: 10
+  threeStar: 10
+  maetLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!50 &1413306978645761921
 Rigidbody2D:
   serializedVersion: 4

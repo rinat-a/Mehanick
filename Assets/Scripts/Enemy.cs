@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject[] stars;
     [SerializeField] int twoStar = 10;
     [SerializeField] int threeStar = 10;
+    [SerializeField] LayerMask maetLayer;
 
 
     GameObject meat;
@@ -42,7 +43,6 @@ public class Enemy : MonoBehaviour
         }
         slider.transform.position = transform.position + new Vector3(0, 0.6f, 0);
         slider.transform.rotation = Quaternion.identity;
-        meat = GameObject.FindGameObjectWithTag("meat");
         RandomStar();
     }
 
@@ -68,10 +68,17 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if ((transform.position - meat.transform.position).magnitude < distanceToMeat && meat.activeSelf)
-            transform.position = Vector2.MoveTowards(transform.position, meat.transform.position, speed * Time.deltaTime);
+        if (meat != null)
+        {
+            //if ((transform.position - meat.transform.position).magnitude < distanceToMeat)
+                transform.position = Vector2.MoveTowards(transform.position, meat.transform.position, speed * Time.deltaTime);
+        }
         else
             transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
+        var hit = Physics2D.OverlapCircle(transform.position, distanceToMeat, maetLayer);
+        if (hit != null)
+            meat = hit.gameObject;
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
