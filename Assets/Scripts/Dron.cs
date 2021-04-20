@@ -28,6 +28,12 @@ public class Dron : MonoBehaviour
         newPos.x = Mathf.Clamp(newPos.x, -camBorder.x, camBorder.x);
         newPos.y = Mathf.Clamp(newPos.y, -camBorder.y, camBorder.y);
         transform.position = newPos;
+
+        if (joystick.Direction != Vector2.zero)
+            //transform.right = Vector2.Lerp(transform.right, joystick.Direction, Time.deltaTime * 1);
+            transform.right = Vector2.Lerp(transform.right, joystick.Direction, 1);
+
+
     }
     public void Charge()
     {

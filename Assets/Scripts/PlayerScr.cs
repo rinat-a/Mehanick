@@ -79,8 +79,10 @@ public class PlayerScr : MonoBehaviour
                 {
                     Instantiate(bullet, ShotPoint.position, transform.rotation);
                     var part = Instantiate(particle, ShotPoint.position, transform.rotation);
+                    AudioManager.S.Play("shoot");
                     Destroy(part, 0.2f);
                     slider.value = bulets;
+                    bulets--;
                 }
                     else if (!isReload)
                     {
@@ -101,6 +103,7 @@ public class PlayerScr : MonoBehaviour
             slider.value = bulets;
             yield return new WaitForSeconds(reloadTime/bulletCount);
         }
+        AudioManager.S.Play("reload");
         slider.fillRect.GetComponent<Image>().color = Color.white;
         isReload = false;
     }

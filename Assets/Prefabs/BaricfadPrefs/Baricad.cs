@@ -10,5 +10,6 @@ public class Baricad : MonoBehaviour
         Health--;
         if (Health <= 0)
             Destroy(gameObject);
+        AudioManager.S.Play("collision");
     }
 }

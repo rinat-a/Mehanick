@@ -19,10 +19,19 @@ public class Enemy : MonoBehaviour
     [SerializeField] Bonus[] bonuses;
     [SerializeField] GameObject bonusPref;
     [SerializeField] GameObject particles;
+    [SerializeField] float distanceToMeat = 5.0f;
+
+    [SerializeField] GameObject[] stars;
+    [SerializeField] int twoStar = 10;
+    [SerializeField] int threeStar = 10;
+
+
+    GameObject meat;
     Vector3 moveDirection;
     void Start()
     {
         Player = FindObjectOfType<PlayerScr>();
+        player = Player.transform;
         enemyHealth = maxHealth;
         slider.value = slider.maxValue= maxHealth;
         moveDirection = player.position - transform.position;
@@ -31,13 +40,38 @@ public class Enemy : MonoBehaviour
             float angle = Mathf.Atan2(-moveDirection.x, moveDirection.y) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
+        slider.transform.position = transform.position + new Vector3(0, 0.6f, 0);
+        slider.transform.rotation = Quaternion.identity;
+        meat = GameObject.FindGameObjectWithTag("meat");
+        RandomStar();
     }
 
+    void RandomStar()
+    {
+        if (Random.Range(0,100) < threeStar)
+        {
+            enemyHealth = maxHealth + 50;
+            speed += 10;
+            distanceToMeat -=3;
+            stars[1].SetActive(true);
+            stars[2].SetActive(true);
+        }
+        else if(Random.Range(0, 100) < twoStar)
+        {
+            enemyHealth = maxHealth + 25;
+            speed += 5;
+            distanceToMeat -= 2;
+            stars[1].SetActive(true);
+        }
+
+    }
 
     void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
-        
+        if ((transform.position - meat.transform.position).magnitude < distanceToMeat && meat.activeSelf)
+            transform.position = Vector2.MoveTowards(transform.position, meat.transform.position, speed * Time.deltaTime);
+        else
+            transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

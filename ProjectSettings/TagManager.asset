@@ -7,6 +7,8 @@ TagManager:
   - Canvas
   - Dron
   - Mon
+  - Boss
+  - meat
   layers:
   - Default
   - TransparentFX
