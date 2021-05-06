@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] int threeStar = 10;
     [SerializeField] LayerMask maetLayer;
 
+    [SerializeField] int xpCount = 5;
 
     GameObject meat;
     Vector3 moveDirection;
@@ -75,9 +76,22 @@ public class Enemy : MonoBehaviour
         }
         else
             transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
-        var hit = Physics2D.OverlapCircle(transform.position, distanceToMeat, maetLayer);
-        if (hit != null)
-            meat = hit.gameObject;
+        var hit = Physics2D.OverlapCircleAll(transform.position, distanceToMeat, maetLayer);
+        if (hit.Length > 0 && meat == null)
+        {
+            //meat = hit.gameObject;
+            Collider2D target = hit[0];
+            float distance = (transform.position - hit[0].transform.position).magnitude;
+            foreach(var h in hit)
+            {
+                if((transform.position - h.transform.position).magnitude < distance)
+                {
+                    target = h;
+                    distance = (transform.position - h.transform.position).magnitude;
+                }
+            }
+            meat = target.gameObject;
+        }
         
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -108,10 +122,13 @@ public class Enemy : MonoBehaviour
         {
             enemyHealth -= damage; 
             slider.value = enemyHealth;
+            var part = Instantiate(particles, transform.position, Quaternion.identity);
+            Destroy(part, 0.4f);
             if (enemyHealth < 0)
             {
-                Destroy(gameObject);
+                XP.S.UpXP(xpCount);
                 BonusDrop();
+                Destroy(gameObject);
             }
         }
     }

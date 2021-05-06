@@ -9,6 +9,7 @@ TagManager:
   - Mon
   - Boss
   - meat
+  - Enemy
   layers:
   - Default
   - TransparentFX

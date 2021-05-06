@@ -32,6 +32,7 @@ public class PlayerScr : MonoBehaviour
 
     public bool isShoot = false;
 
+
     private void Awake()
     {
         if (P == null) P = this;
@@ -45,6 +46,8 @@ public class PlayerScr : MonoBehaviour
         slider.maxValue = bulletCount;
         slider.value = bulets;
         StartCoroutine(Shoot());
+        Animator anim;
+        anim = GetComponent<Animator>();
     }
 
   

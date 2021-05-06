@@ -19,6 +19,7 @@ public class Shoop : MonoBehaviour
     [SerializeField] int healthCoast = 5;
     [SerializeField] int upReloadCoast = 5;
     [SerializeField] int upbulletCountCoast = 5;
+    [SerializeField] int upMeatCoast = 5;
     #endregion
 
     #region Barickad
@@ -68,6 +69,15 @@ public class Shoop : MonoBehaviour
             money -= healthCoast;
             moneyText.text = "Money: " + money;
             healthTowerScr.GetComponent<HealthTowerScr>().Uphealth();
+        }
+    }
+    public void MeatUp()
+    {
+        if (money >= healthCoast)
+        {
+            money -= upMeatCoast;
+            moneyText.text = "Money: " + money;
+            healthTowerScr.GetComponent<Dron>().Meat();
         }
     }
     public void moneyUp()

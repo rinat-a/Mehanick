@@ -10,6 +10,7 @@ public class Meat : MonoBehaviour
 
     private void Start()
     {
+        enemyList.Clear();
         StartCoroutine(Damage());
     }
     public void IsDamage()
@@ -22,7 +23,7 @@ public class Meat : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!enemyList.Contains(collision))
+        if (!enemyList.Contains(collision) && collision.CompareTag("Enemy"))
         {
             enemyList.Add(collision);
         }
@@ -31,6 +32,7 @@ public class Meat : MonoBehaviour
     {
         while (true)
         {
+            Debug.Log(enemyList.Count);
             if(enemyList.Count > 0)
             {
                 foreach (var e in enemyList)
